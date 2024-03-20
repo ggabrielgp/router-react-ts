@@ -17,6 +17,3 @@ function Private() {
 }
 
 export default Private;
-
-// 1:15:09 / 1:51:31
-// https://www.youtube.com/watch?v=UVsX7A2wfLo&t=1021s
