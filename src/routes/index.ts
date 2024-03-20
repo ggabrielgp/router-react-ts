@@ -1,2 +1,2 @@
-export { default as RoutesWithNotFound } from './routes-with-not-found';
+export { default as RoutesWithNotFound } from './RoutesWithNotFound';
 export * from './routes';

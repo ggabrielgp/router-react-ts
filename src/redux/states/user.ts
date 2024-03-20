@@ -1,35 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserInfo } from "../../models";
+import { Roles, UserInfo } from "../../models";
+import { persistLocalStorage, clearLocalStorage } from "../../utilities";
 
 export const EmptyUserState: UserInfo = {
   id: 0,
   name: "",
-  email: ""
+  email: "",
+  rol: Roles.USER
 }
 
-export const persistLocalStorageUser = (userInfo: UserInfo) => {
-  localStorage.setItem('user', JSON.stringify({ ...userInfo }));
-}
-
-export const clearLocalStorageUser = () => {
-  localStorage.removeItem('user');
-}
+export const UserKey = "user";
 
 export const userSlice = createSlice({
-  name: "user",
-  initialState: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : EmptyUserState,
+  name: UserKey,
+  initialState: localStorage.getItem(UserKey) ? JSON.parse(localStorage.getItem(UserKey) as string) : EmptyUserState,
   reducers: {
     createUser: (state, action) => {
-      persistLocalStorageUser(action.payload);
+      persistLocalStorage<UserInfo>(UserKey, action.payload);
       return action.payload
     },
     updateUser: (state, action) => {
       const result = { ...state, ...action.payload };
-      persistLocalStorageUser(result);
+      persistLocalStorage<UserInfo>(UserKey, result);
       return result;
     },
     resetUser: () => {
-      clearLocalStorageUser()
+      clearLocalStorage(UserKey)
       return EmptyUserState
     }
   }
